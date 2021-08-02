@@ -1,0 +1,13 @@
+body{
+    background-color: darkgray;
+}
+.firstYearsContainer{
+    display: flex;
+    border: 20 px;
+    margin-left: auto;
+}
+.expeledContainer{
+    display: flex;
+    border: 20 px;
+    margin-right: auto;
+}
