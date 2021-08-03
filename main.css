@@ -1,7 +1,11 @@
 body{
-    background-color: darkgray;
+    background-color: whitesmoke;
 }
-.firstYearsContainer{
+.formContainer{
+    display: block;
+
+}
+.firstYearContainer{
     display: flex;
     border: 20 px;
     margin-left: auto;
