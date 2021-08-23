@@ -1,47 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting Hat!</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <div class="jumbotron text-center">
+      <h1 class="display-4">Welcome to Hoggy Hoggy Warts!</h1>
+      <br>
+      <p class="lead">
+        I've done this job for centuries on every student's head I've sat of thoughts I take inventories for I'm the famous Sorting Hat.
+        I've sorted high, I've sorted low,
+        I've done the job through thick and thin
+        So put me on and you will know
+        Which house you should be in...
+      </p>
+      <hr class="my-4" />
+      <p>
+        Hmm. Difficult. Very difficult.
+      </p>
+      <div id="button-div">
+        <button id="start-sorting" class="btn btn-primary btn-lg">
+          Let's Start Sorting
+        </button>
+      </div>
+      <div id="sorting-form" class="sorting-form"></div>
+    </div>
+    <div class="cards d-flex p-4">
+      <div class="new-student-cards">
+        <center><h4>First Year's</h4></center>
+        <div
+          id="first-years-card-display"
+          class="d-flex flex-wrap justify-content-center"
+        ></div>
+      </div>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sorting Hat !</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="main.css">
-</head>
-
-<body>
-  <!--Welcome Container-->
-  <div id="welcomeContainer" class="text"></div>
-  <!-- Form Container -->
-  <div id="formContainer" class="forms"></div>
-  <!--FirstYearContainer-->
-  <div id="firstYearContainer" class="row">
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">First Year's</h5>
+      <div class="moldy-voldy-cards">
+        <center><h4>He Who Must Not Be Named's Army</h4></center>
+        <div
+          id="voldermorts-army"
+          class="d-flex flex-wrap justify-content-center voldermorts-army mb-5"
+        >
+          No Death Eaters...yet!
         </div>
       </div>
     </div>
-  </div>
 
-  <!--Expeled Container-->
-  <div id="expeledContainer" class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">He Who Must Not be Named's Army</h5>
-        <p class="card-text">No Death Eaters...yet!</p>
-      </div>
-    </div>
-  </div>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-  <script src="main.js"></script>
-</body>
-
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <script src="main.js"></script>
+  </body>
 </html>

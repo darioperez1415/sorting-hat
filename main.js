@@ -1,141 +1,131 @@
-const firstYearContainer = []
-const expeledStudents = []
-const studentHouses = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]
+const studentArray = []
+const voldermortsArmy = []
+const houseColors = {
+  gryffindor: "#7F0909",
+  slytherin: "#0D6217",
+  hufflepuff: "#EEE117",
+  ravenclaw: "#000A90",
+};
 
-//Render to Dom
-const renderToDom = (divId, textToRender) => {
+const domEvents = () => {
+  document.querySelector('#start-sorting').addEventListener('click', showForm)
+  document
+    .querySelector('#sorting-form')
+    .addEventListener('click', addStudentToArray)
+  document
+    .querySelector('#first-years-card-display')
+    .addEventListener('click', expelStudent)
+};
+
+const renderToDOM = (divId, content) => {
   const selectedDiv = document.querySelector(divId);
-  selectedDiv.innerHTML = textToRender;
+  selectedDiv.innerHTML = content
 };
 
-//Distlays Welcome card on the DOM
-const welcomeCard = () => {
-  const domString = `
-  <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Welcome to Hawarts!</h5>
-    <p class="card-text">The first-year Hogwarts School of Witchcraft and Wizardry students are assigned their houses at the annual Sorting Ceremony.</p>
-    <button type ="button" id="letsBegin" class="btn btn-primary">Let's begin!</button>
-  </div>
-</div>
-  `
-  renderToDom("#welcomeContainer", domString);
+const showForm = () => {
+  document.querySelector('#button-div').innerHTML = ""
+  const content = `<div class="card m-3 justify-content-center">
+                        <div class="card-body text-center">  
+                            <h4>
+                                Enter First Year's Name
+                            </h4>
+                            <div id="error-message"></div>
+                            <div class="d-flex col-md-6 offset-md-3">
+                                <label for="inlineFormInput">Student: </label>
+                                <input type="text" class="form-control mx-3" id="student-name" placeholder="Luna Lovegood" required>
+                               <button id="sort" class="btn btn-primary mb-2">Sort!</button>
+                            </div>
+                        </div>
+                    </div>`;
+  renderToDOM('#sorting-form', content)
+  document.querySelector('#student-name').addEventListener('keyup', addStudentToArray); // this could have easily been accomplished by using a form tag instead of using separate form elements as form submits on enter key press also
 };
 
-//Frist event lister, after user clicks "letsBegin", this function adds form
+const addStudentToArray = (e) => {
+  if (e.target.id === 'sort' || e.keyCode === 13) {
+    const student = document.querySelector('#student-name')
+    errorMessage(student.value);
 
-const firstEventListner = () => {
-  document.querySelector("#letsBegin").addEventListener("click", addsForm);
-}
-// Function for calling form for new students
-const addsForm = () => {
-  const domString = `
-    <div id="form-entry" class="input-group">
-    <label for"Name" class="form-label">Name</label> 
-    <input type="text" class="form-control rounded" placeholder="Name" aria-label="Name"
-      aria-describedby="search-addon" id="Name"/>
-    <button type="button" id="sortButton" class="btn btn-outline-primary">Sort!</button>
-  </div>`
-  renderToDom("#formContainer", domString);
-  document.querySelector("#sortButton").addEventListener("click", handleButtonClick);
-}
-//Function for house assingnment 
-const houseAssignmet = () => {
-  const houseIdentifier = Math.floor(Math.random() * 4) + 1;
-  if (houseIdentifier === 1) {
-    return "Griffandor";
-  } else if (houseIdentifier === 2) {
-    return "Ravenclaw";
-  } else if (houseIdentifier === 3) {
-    return "hufflepuff";
+    if (student.value) {
+      studentArray.push({
+        name: student.value,
+        house: sortingHat(),
+      });
+      student.value = '';
+    }
+
+    let sortedArray = sortStudentsByHouse(studentArray);
+    cardCreator('#first-years-card-display', sortedArray);
+  }
+};
+
+const sortingHat = () => {
+  const houses = ['gryffindor', 'slytherin', 'hufflepuff', 'ravenclaw'];
+  let sortingHat = houses[Math.floor(Math.random() * houses.length)];
+  return sortingHat;
+};
+
+
+const sortStudentsByHouse = (array) => {
+  return array.sort((a, b) => a.house > b.house ? 1 : -1);
+};
+
+const cardCreator = (divId, array) => {
+  let card = '';
+  for (let i = 0; i < array.length; i++) {
+    if (divId.includes('voldermort')) {
+      card += `<div class="card m-3" style="width: 18rem;">
+                    <img class="card-img-top" src="http://images6.fanpop.com/image/photos/35900000/Voldemorts-army-harry-potter-35971430-275-183.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Sadly, <b>${array[i].name}</b> went over to the dark side!</p>
+                    </div>
+                </div>`;
+    } else {
+      card += `<div class="card m-3" style="min-width: 300px;" id="${i}">
+                    <div class="row no-gutters">
+                        <div class="col-md-4" style="min-height: 150px; background-color: ${
+                          houseColors[array[i].house]
+                        }">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">${array[i].name}</h5>
+                                <p class="card-text">${array[
+                                  i
+                                ].house.toUpperCase()}</p>
+                                <button type="button" id="${i}" class="btn btn-danger">EXPEL</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+    }
+  }
+
+  renderToDOM(divId, card);
+};
+
+const errorMessage = (student) => {
+  if (student) {
+    document.querySelector('#error-message').innerHTML = '';
   } else {
-    return "Syltherin";
-  }
-}
-//Handles sort button click
-
-const handleButtonClick = (event) => {
-  event.preventDefault(); //Prevents page refresh
-  const sortClick = event.target.id;
-  if (sortClick === "sortButton") {
-
-    const student = {
-      name: document.querySelector("#Name").value,
-      house: houseAssignmet(1, 5)
-    };
-    firstYearContainer.push(student);
-    studentAssignment(firstYearContainer)
-  }
-}
-
-// Takes house and assigns a color 
-
-const houseColor = (houseAssignmet) => {
-
-  if (houseAssignmet === "Griffandor") {
-  return '#AE0001';
-} else if (houseAssignmet = "Ravenclaw"){
-  return '#F0FFFF';
-}
-  else if (houseAssignmet = "HufflePuff") {
-    return '#ffcc00';
-} else {
-  return '#006600';
-}
-}
-//Passes cards into DOM
-const studentAssignment = (array) => {
-  let domString = "";
-  array.forEach((student) => {
-    domString += `
-    <div class="card" style="width: 18rem;">
-  <div class="card-body">
-  <h5 class="card-title">"${student.name}"</h5>
-    <p class="card-text">"${student.house}".</p>
-    <button type="button" id="Expelled" class="btn btn-outline-primary">Expel</button>
-</div>
-    `;
-  })
-  renderToDom("#firstYearContainer", domString);
-};
-
-
-const expelButton = (event) => {
-
-  const expelClick = event.traget.id;
-
-  if (targetId === "Expelled") {
-    const darkSide = student.splice(expelClick, 1);
-    expeledStudents.push(darkSide[0]);
-    valdArray(expeledStudents);
+    document.querySelector('#error-message').innerHTML = `
+      <div style="color: red;margin-bottom: 10px;">
+        <b>Please type a name</b>
+      </div>`;
   }
 };
 
-//Creats array for Vald Cards
-const valdArray = (array) => {
-  let domString = ""
-  array.forEach((student) => {
-    domString += `    <div class="expelCard" style="width: 18rem;">
-    <div class="expelCardBody">
-    <h5 class="expelCardTitle">${student.name} </h5>
-    <p class="expelCardText">Has joined Voldemort's Army!</p>
-    </div>
-</div>
-`
-  });
-  renderToDom("#expeledStudents", domString);
+const expelStudent = (e) => {
+  if (e.target.type === 'button') {
+    voldermortsArmy.push(studentArray[e.target.id]);
+    studentArray.splice(e.target.id, 1);
+    cardCreator('#first-years-card-display', studentArray);
+    cardCreator('#voldermorts-army', voldermortsArmy);
+  }
 };
 
-
-// Handle botton clicks
-const buttonEvents = () => {
-  document.querySelector("#expeled").addEventListener("click", expelButton);
-}
-//This starts my application 
 const init = () => {
-  welcomeCard();
-  firstEventListner();
-  buttonEvents();
-}
+  domEvents();
+};
 
 init();
